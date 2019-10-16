@@ -25,4 +25,7 @@ def get_par():
 	par.Env_size=10
 	par.RateMap_resol=50
 
-	par.Remap_prob=0.5
+	par.Remap_prob=0.2
+
+
+	par.Conn_norm=1
