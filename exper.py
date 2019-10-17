@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.spatial.distance import cdist
+from acts import Activation
 
 class Experiment:
 
@@ -12,15 +13,21 @@ class Experiment:
 		self.Input_Positions[:,0]=np.ndarray.flatten(x_samp)
 		self.Input_Positions[:,1]=np.ndarray.flatten(y_samp)
 
-	def SampleOutput(self,par,W,PlaceMap):
+	def SampleOutput(self,par,J,PlaceMap,W=np.array([])):
 		if(self.Sample_type=='PlaceToGrid'):
-			self.Output=np.zeros((self.Input_Positions.shape[0],W.shape[0]))
+			self.Output=np.zeros((self.Input_Positions.shape[0],J.shape[0]))
 			for tt in range(self.Input_Positions.shape[0]):
 				x=self.Input_Positions[tt,0]
 				y=self.Input_Positions[tt,1]
 				D_Act=(PlaceMap.Place_Centers[:,0]-x)**2+(PlaceMap.Place_Centers[:,1]-y)**2
-				Act=par.Place_h*np.exp(-D_Act/(2*(par.Place_s/2)**2))
+				Act=par.Place_h*np.exp(-D_Act/(2*(par.Place_s)**2))
+
+				ActRule=Activation(J,W,'reverberation','mean')
+				ActRule.Propagate(Act)
 
 
-				self.Output[tt,:]=W.dot(Act)
+				
+				
+				#AO=AO/sum(AO)
+				self.Output[tt,:]=ActRule.ActOut
 			#self.Output=np.reshape(self.Output,(par.RateMap_resol,par.RateMap_resol,-1))	

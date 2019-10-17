@@ -9,13 +9,13 @@ class PlaceRepresentation:
 
 	def New_Map(self,par):
 		if(par.Env_shape=='circle'):
-			RR=np.random.rand(par.N_hc)*par.Env_size/2
+			RR=np.random.rand(par.N_hc)*par.Env_size/2*1.1
 			AA=np.random.rand(par.N_hc)*np.pi*2
 			self.Place_Centers[:,0]=np.sqrt(RR/(par.Env_size/2))*np.cos(AA)*par.Env_size/2
 			self.Place_Centers[:,1]=np.sqrt(RR/(par.Env_size/2))*np.sin(AA)*par.Env_size/2
 		elif(par.Env_shape=='square'):
-			self.Place_Centers[:,0]=np.random.rand(par.N_hc)*par.Env_size-par.Env_size/2
-			self.Place_Centers[:,1]=np.random.rand(par.N_hc)*par.Env_size-par.Env_size/2
+			self.Place_Centers[:,0]=np.random.rand(par.N_hc)*(par.Env_size*1.2)-(par.Env_size*1.2)/2
+			self.Place_Centers[:,1]=np.random.rand(par.N_hc)*(par.Env_size*1.2)-(par.Env_size*1.2)/2
 
 	def Remap(self,par):
 		remapping=np.random.rand(par.N_hc)
