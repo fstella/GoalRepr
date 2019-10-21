@@ -32,10 +32,10 @@ class Connections:
 		elif(self.c_type=='dist_gridtogrid'):
 			for ii in range(Centers_In.shape[0]):
 				for jj in range(Centers_Out.shape[0]):
-					field_d=(np.sum((Centers_In[ii,:,0]-Centers_Out[jj,:,0])**2))**0.5
+					#field_d=(np.sum((Centers_In[ii,:,0]-Centers_Out[jj,:,0])**2))**0.5
 					#cdist(Centers_In[[ii],:,0],Centers_Out[jj,:,0].T).min()
-					
+					field_d=cdist(Centers_In[[ii],:,[7]],Centers_Out[jj,:,:].T).min()
 					self.W[jj,ii]=np.exp(-field_d**2/(2*(par.Conn_grtogr_spread)**2))
 			self.W-=par.Conn_grtogr_inhib
-								
+			np.fill_diagonal(self.W, 0)					
 		self.Normalize(par)

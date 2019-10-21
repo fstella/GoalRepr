@@ -22,9 +22,9 @@ def get_par():
 	par.Grid_h=1
 
 	par.Conn_pltogr_spread=par.Grid_s/4
-	par.Conn_grtogr_spread=par.Grid_s/4
+	par.Conn_grtogr_spread=par.Grid_s/3
 
-	par.Conn_grtogr_inhib=0.001  # To be compared with a mximum positive connection of 1
+	par.Conn_grtogr_inhib=0.0009  # To be compared with a mximum positive connection of 1
 
 	par.Env_shape='square'
 	par.Env_size=10
@@ -35,3 +35,7 @@ def get_par():
 
 	par.Conn_norm_ff=1
 	par.Conn_norm_re=1
+
+	par.Act_noise_grid=0.005
+
+	par.Rever_steps=100

@@ -8,21 +8,31 @@ class Activation:
 		self.n_type=n_type
 		self.J=FF_Conn
 		self.W=RR_Conn
+		
 	
-	def Propagate(self,Act):
+	def Propagate(self,Act,Noise,N_Steps):
 		self.ActOut=self.J.dot(Act)
 		norm=sum(self.ActOut)
 		self.Normalize(norm)
+		if(self.a_type=='sample'):
+			self.TimeAct=np.zeros((10,self.J.shape[0]))
+			for tt in range(10):
+				self.ActOut=self.ActOut-0.1*(self.ActOut-(self.J.dot(Act)+np.random.standard_normal(self.J.shape[0])*Noise))
+				self.Normalize(norm)
+				self.TimeAct[tt,:]=self.ActOut
+
 		if(self.a_type=='reverberation'):
-			for tt in range(2):
-				self.ActOut=self.J.dot(Act)+self.W.dot(self.ActOut)
-				
+			self.TimeAct=np.zeros((N_Steps,self.J.shape[0]))
+
+			for tt in range(10):
+				self.ActOut=self.ActOut-0.1*(self.ActOut-(self.J.dot(Act)+self.W.dot(self.ActOut)+np.random.standard_normal(self.J.shape[0])*Noise))
 				self.Normalize(norm)
-			for tt in range(20):
-				self.ActOut=self.W.dot(self.ActOut)
-				
+				self.TimeAct[tt,:]=self.ActOut
+
+			for tt in range(10,N_Steps):
+				self.ActOut=self.ActOut-0.1*(self.ActOut-self.W.dot(self.ActOut)-np.random.standard_normal(self.J.shape[0])*Noise)
 				self.Normalize(norm)
-		
+				self.TimeAct[tt,:]=self.ActOut
 		
 		self.Normalize(norm)
 	
