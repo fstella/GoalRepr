@@ -24,7 +24,7 @@ def get_par():
 	par.Conn_pltogr_spread=par.Grid_s/4
 	par.Conn_grtogr_spread=par.Grid_s/3
 
-	par.Conn_grtogr_inhib=0.0009  # To be compared with a mximum positive connection of 1
+	par.Conn_grtogr_inhib=0.0015  # To be compared with a mximum positive connection of 1
 
 	par.Env_shape='square'
 	par.Env_size=10
